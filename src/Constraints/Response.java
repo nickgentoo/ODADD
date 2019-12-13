@@ -46,7 +46,7 @@ public class Response implements LCTemplateReplayer {
 	private LossyCounting<HashMap<String, HashMap<String, Integer>>> pendingConstraintsPerTrace = new LossyCounting<HashMap<String, HashMap<String, Integer>>>();
 	private LossyCounting<HashMap<String, HashMap<String, Integer>>> fulfilledConstraintsPerTrace = new LossyCounting<HashMap<String, HashMap<String, Integer>>>();
 	
-	File file = new File("/home/matte/workspace/OnlineDataAwareDeclareDiscovery/test/SynteticResults/OutResponse.txt");
+	File file = new File("/Users/nick/OutDeclare/OutResponse.txt");
 	FileWriter fw = null;
 	BufferedWriter brf;
 	static PrintWriter printout;{			

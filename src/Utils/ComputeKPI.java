@@ -20,8 +20,8 @@ public class ComputeKPI {
 		int i = 0;
 
 		for(i = 0; i < 7; i++){
-			String FILENAME = "/home/matte/workspace/OnlineDataAwareDeclareDiscovery/test/SynteticResults/"+name[i]+".txt";///home/matte/workspace/OnlineDataAwareDeclareDiscovery/test/Results
-			File file = new File("/home/matte/workspace/OnlineDataAwareDeclareDiscovery/test/SynteticResults/SKPI_"+name[i]+".csv");
+			String FILENAME = "/Users/nick/OutDeclare/"+name[i]+".txt";///home/matte/workspace/OnlineDataAwareDeclareDiscovery/test/Results
+			File file = new File("/Users/nick/OutDeclare/SKPI_"+name[i]+".csv");
 			FileWriter fw = null;
 			BufferedWriter brf;
 			PrintWriter printout;{			
