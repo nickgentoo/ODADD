@@ -27,7 +27,7 @@ public class LCReplayer {
 //		replayers.add(new ChainPrecedence());
 //		replayers.add(new ChainResponse());
 		replayers.add(new Precedence());
-//		replayers.add(new Response());
+		replayers.add(new Response());
 //		replayers.add(new RespondedExistence());
 
 //		replayers.add(new Succession());

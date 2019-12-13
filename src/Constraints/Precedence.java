@@ -41,7 +41,7 @@ public class Precedence implements LCTemplateReplayer {
 	private LossyCounting<HashMap<String, Integer>> activityLabelsCounterPrecedence = new LossyCounting<HashMap<String, Integer>>();
 	private LossyCounting<HashMap<String, HashMap<String, Integer>>> fulfilledConstraintsPerTrace = new LossyCounting<HashMap<String, HashMap<String, Integer>>>();	
 	
-	File file = new File("/home/matte/workspace/OnlineDataAwareDeclareDiscovery/test/SynteticResults/OutPrecedence.txt");
+	File file = new File("/Users/nick/OutDeclare/OutPrecedence.txt");
 	FileWriter fw = null;
 	BufferedWriter brf;
 	static PrintWriter printout;{			

@@ -45,14 +45,14 @@ public class Entry {
 	static int[] indVal;
 	static double[] attVal;
 	
-//	private static String path = "/home/matte/Scaricati/CompleteHospital"; ///
+	private static String path = "/Users/nick/OutDeclare/CompleteHospital"; ///
 //	private static String path = "/home/matte/Scaricati/HL"; ///
 //	private static String path = "/home/matte/Scaricati/40x20x5000";
 //	private static String path = "/home/matte/workspace/OnlineDataAwareDeclareDiscovery/test/Log/logTest3";
 //	private static String path = "/home/matte/Scaricati/EPL2"; 
 //	private static String path = "/home/matte/Scaricati/PRECN";
 //	private static String path = "/home/matte/Scaricati/RESP";
-	private static String path = "/home/matte/Scaricati/L1";
+//	private static String path = "/home/matte/Scaricati/L1";
 	
 	
 	public Entry() {
@@ -61,7 +61,7 @@ public class Entry {
 	}
 
 	public static void main(String[] args) throws IOException {
-		File file = new File("/home/matte/workspace/OnlineDataAwareDeclareDiscovery/test/SynteticResults/Log.txt");
+		File file = new File("/Users/nick/OutDeclare/Log.txt");
 		FileWriter fw = null;
 		BufferedWriter brf;
 		{			
