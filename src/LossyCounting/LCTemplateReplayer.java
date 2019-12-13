@@ -37,6 +37,7 @@ public interface LCTemplateReplayer {
 	 * 
 	 * @param currentBucket
 	 */
+	public void resultsTemp(int ne);
 	public void results();
 	public void setAttribute(Attribute[] allAttr, int[] indVal, double[] attVal);
 

@@ -412,6 +412,23 @@ public class AlternatePrecedence implements LCTemplateReplayer {
 		//System.out.println(en);
 		//System.out.println("AltPr:\ttprocess:\t"+(System.currentTimeMillis()-start)+"\ttaddObs:\t"+time+"\tnumEv:\t"+en);
 	}
+
+	@Override
+	public void resultsTemp(int np){
+		for(String aEvent : mod.mm.keySet()){ 
+			for(String bEvent : mod.mm.get(aEvent).keySet()){
+				printout.println("@@@@@@@@@@@@@@@@@@@@@@@@\n"+aEvent+"//"+bEvent+"\n@@@@@@@@@@@@");
+				printout.println(mod.mm.get(aEvent).get(bEvent).getElement1().getModel());
+				printout.println("\nCorrect Fulfillment = "+mod.value.get(aEvent+"-"+bEvent)[0]+
+						"\nUncorrect Fulfillment = "+mod.value.get(aEvent+"-"+bEvent)[1]+
+						"\nCorrect Violation = "+mod.value.get(aEvent+"-"+bEvent)[2]+
+						"\nUncorrect Violation = "+mod.value.get(aEvent+"-"+bEvent)[3]+"\n");
+			}
+		}	
+		//System.out.println("AltPrec");
+		printout.flush();
+		printout.close();
+	}
 	
 	@Override
 	public void results(){

@@ -380,6 +380,11 @@ public class RespondedExistence implements LCTemplateReplayer {
 	}
 	
 	@Override
+	public void resultsTemp(int np){
+		
+		//NOT IMPLEMENTED
+	}
+	@Override
 	public void results(){
 		for(String aEvent : mod.mm.keySet()){ 
 			for(String bEvent : mod.mm.get(aEvent).keySet()){

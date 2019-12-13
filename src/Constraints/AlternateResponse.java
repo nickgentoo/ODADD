@@ -383,7 +383,11 @@ public class AlternateResponse implements LCTemplateReplayer {
 		mod.clean();
 		//System.out.println("AltRe:\ttprocess:\t"+(System.currentTimeMillis()-start)+"\ttaddObs:\t"+time+"\tnumEv:\t"+en);
 	}
-
+	@Override
+	public void resultsTemp(int np){
+		
+		//NOT IMPLEMENTED
+	}
 	@Override
 	public void results(){
 		for(String aEvent : mod.mm.keySet()){ 

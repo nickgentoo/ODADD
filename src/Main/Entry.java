@@ -27,6 +27,7 @@ import com.yahoo.labs.samoa.instances.Attribute;
 import Utils.Utils;
 import LossyCounting.LCReplayer;
 import Utils.ComputeKPI;
+import org.apache.commons.cli.*;
 
 /**
  * @author matte
@@ -38,14 +39,16 @@ public class Entry {
 	
 	private static HashMap<String, ArrayList<String>> nominal = new HashMap<String, ArrayList<String>>();
 	protected static OSXMLConverter converter = new OSXMLConverter();
-	private static LCReplayer replayer = new LCReplayer();
-	private static int bucketWidth=100000;//500
+	//private static LCReplayer replayer = new LCReplayer();
+	private static LCReplayer replayer = null;
+	private static int bucketWidth=50; //100000;//500
 	
 	static Attribute[] attlist;			
 	static int[] indVal;
 	static double[] attVal;
+	static Boolean printallmodels=false;
 	
-	private static String path = "/Users/nick/OutDeclare/CompleteHospital"; ///
+	private static String path = null;
 //	private static String path = "/home/matte/Scaricati/HL"; ///
 //	private static String path = "/home/matte/Scaricati/40x20x5000";
 //	private static String path = "/home/matte/workspace/OnlineDataAwareDeclareDiscovery/test/Log/logTest3";
@@ -61,7 +64,73 @@ public class Entry {
 	}
 
 	public static void main(String[] args) throws IOException {
-		File file = new File("/Users/nick/OutDeclare/Log.txt");
+		
+		//parse command line arguments
+		Options options = new Options();
+		
+        Option printmodels = new Option("p", "printintermediate", true, "print intemrediate models");
+        printmodels.setRequired(false);
+        options.addOption(printmodels);
+
+        Option bsize = new Option("b", "bucketsize", true, "input file path");
+        bsize.setRequired(false);
+        options.addOption(bsize);
+        
+        Option input = new Option("i", "inputfile", true, "input file");
+        input.setRequired(false);
+        options.addOption(input);
+
+        Option output = new Option("o", "outputdir", true, "output dir");
+        output.setRequired(false);
+        options.addOption(output);
+
+        CommandLineParser parser = new DefaultParser();
+        HelpFormatter formatter = new HelpFormatter();
+        CommandLine cmd = null;
+
+        try {
+            cmd = parser.parse(options, args);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+            formatter.printHelp("utility-name", options);
+
+            System.exit(1);
+        }
+        String outputFilePath=null;
+        Integer bsizevalue=null;
+        if(cmd.getOptionValue("bucketsize")!=null) {
+        bsizevalue = Integer.parseInt(cmd.getOptionValue("bucketsize"));
+        }
+        outputFilePath = cmd.getOptionValue("outputdir");
+        if(outputFilePath == null) {
+        	outputFilePath= System.getProperty("user.home")+"/OutDeclare/";
+        }
+        if(bsizevalue != null) {
+        	bucketWidth= bsizevalue;
+        }
+        String inputFilePath = cmd.getOptionValue("inputfile");
+
+        if (inputFilePath==null) {
+        	inputFilePath = System.getProperty("user.home")+"/OutDeclare/CompleteHospital"; ///
+        }
+        path=inputFilePath;
+        
+        String printallmodelsstring=cmd.getOptionValue("printintermediate");
+        if (printallmodelsstring=="true") {
+        	printallmodels=true;
+        }
+        
+        System.out.println("Bucket width: "+Integer.toString(bucketWidth));
+        System.out.println("Output file path: "+outputFilePath);
+        System.out.println("Print intermediate models: "+printallmodels);
+
+        
+        replayer=new LCReplayer(outputFilePath);
+
+        //end parsing
+		
+		
+		File file = new File(outputFilePath+"/Log.txt");
 		FileWriter fw = null;
 		BufferedWriter brf;
 		{			
@@ -149,11 +218,14 @@ public class Entry {
 				calendar.setTimeInMillis(System.currentTimeMillis());
 				System.out.print("\t--"+calendar.getTime());	
 				log.print("\t--"+calendar.getTime());	
+				if(printallmodels==true) {
+				replayer.resultsTemp(ne);
+				}
 			}
 
 			// events cleanup
 			if (ne % bucketWidth == 0) {
-				//replayer.cleanup(currentBucket);
+				replayer.cleanup(currentBucket);
 			}
 		}
 		br.close();

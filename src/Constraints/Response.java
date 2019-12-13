@@ -25,6 +25,8 @@ import Utils.Utils;
 import com.yahoo.labs.samoa.instances.*;
 
 public class Response implements LCTemplateReplayer {
+	String outpath=null;
+
 	
 	private HashMap<String, LinkedList<HashMap<String, Object>>> snapCollection = new HashMap<String, LinkedList<HashMap<String, Object>>>();
 
@@ -46,7 +48,9 @@ public class Response implements LCTemplateReplayer {
 	private LossyCounting<HashMap<String, HashMap<String, Integer>>> pendingConstraintsPerTrace = new LossyCounting<HashMap<String, HashMap<String, Integer>>>();
 	private LossyCounting<HashMap<String, HashMap<String, Integer>>> fulfilledConstraintsPerTrace = new LossyCounting<HashMap<String, HashMap<String, Integer>>>();
 	
-	File file = new File("/Users/nick/OutDeclare/OutResponse.txt");
+	//File file = new File(System.getProperty("user.home")+"/OutDeclare/OutResponse.txt");
+	File file = new File(outpath+".txt");
+
 	FileWriter fw = null;
 	BufferedWriter brf;
 	static PrintWriter printout;{			
@@ -57,7 +61,11 @@ public class Response implements LCTemplateReplayer {
 	}
 	brf = new BufferedWriter(fw);
 	printout = new PrintWriter(brf);}
-	
+	public  Response(String path) {
+		super();
+		// TODO Auto-generated constructor stub
+		outpath=path+"/OutResponse";
+	}
 	@Override
 	public void addObservation(String caseId, Integer currentBucket) {
 		HashMap<String, HashMap<String, Integer>> ex1 = new HashMap<String, HashMap<String, Integer>>();
@@ -347,6 +355,36 @@ public class Response implements LCTemplateReplayer {
 		//System.out.println("Re:\ttprocess:\t"+(System.currentTimeMillis()-start)+"\ttaddObs:\t"+time);		
 	}	
 	
+	@Override
+	public void resultsTemp(int np){
+		
+		
+		File file = new File(outpath+Integer.toString(np)+".txt");
+		FileWriter fw = null;
+		BufferedWriter brf;
+		PrintWriter printout;			
+		try {
+			fw = new FileWriter(file);
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
+		brf = new BufferedWriter(fw);
+		printout = new PrintWriter(brf);
+		for(String aEvent : mod.mm.keySet()){ 
+			for(String bEvent : mod.mm.get(aEvent).keySet()){
+				//System.out.println(mod.mm.get(aEvent).get(bEvent).getElement1());
+				printout.println("@@@@@@@@@@@@@@@@@@@@@@@@\n"+aEvent+"%"+bEvent+"\n@@@@@@@@@@@@");
+				printout.println(mod.mm.get(aEvent).get(bEvent).getElement1());
+				printout.println("\nCorrect Fulfillment = "+mod.value.get(aEvent+"-"+bEvent)[0]+
+						"\nUncorrect Fulfillment = "+mod.value.get(aEvent+"-"+bEvent)[1]+
+						"\nCorrect Violation = "+mod.value.get(aEvent+"-"+bEvent)[2]+
+						"\nUncorrect Violation = "+mod.value.get(aEvent+"-"+bEvent)[3]+"\n");
+			}
+		}	
+		//System.out.println("Resp");
+		printout.flush();
+		printout.close();
+		}
 	@Override
 	public void results(){
 		for(String aEvent : mod.mm.keySet()){ 

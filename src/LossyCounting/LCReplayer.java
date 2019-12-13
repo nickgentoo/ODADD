@@ -9,25 +9,25 @@ import org.deckfour.xes.model.XTrace;
 
 import com.yahoo.labs.samoa.instances.Attribute;
 
-import Constraints.AlternatePrecedence;
-import Constraints.ChainResponse;
-import Constraints.AlternateResponse;
-import Constraints.ChainPrecedence;
+//import Constraints.AlternatePrecedence;
+//import Constraints.ChainResponse;
+//import Constraints.AlternateResponse;
+//import Constraints.ChainPrecedence;
 import Constraints.Precedence;
-import Constraints.RespondedExistence;
+//import Constraints.RespondedExistence;
 import Constraints.Response;
 
 public class LCReplayer {
 
 	List<LCTemplateReplayer> replayers = new ArrayList<LCTemplateReplayer>();
 	
-	public LCReplayer() {
+	public LCReplayer(String path) {
 //		replayers.add(new AlternatePrecedence());
 //		replayers.add(new AlternateResponse());
 //		replayers.add(new ChainPrecedence());
 //		replayers.add(new ChainResponse());
-		replayers.add(new Precedence());
-		replayers.add(new Response());
+		replayers.add(new Precedence(path));
+		replayers.add(new Response(path));
 //		replayers.add(new RespondedExistence());
 
 //		replayers.add(new Succession());
@@ -76,6 +76,14 @@ public class LCReplayer {
 	 * 
 	 * @param 
 	 */
+	
+	public void resultsTemp(int ne) {
+		for(LCTemplateReplayer t : replayers) {
+			t.resultsTemp(ne);
+		}
+	}
+	
+	
 	public void results() {
 		for(LCTemplateReplayer t : replayers) {
 			t.results();
