@@ -123,6 +123,7 @@ public class Entry {
         System.out.println("Bucket width: "+Integer.toString(bucketWidth));
         System.out.println("Output file path: "+outputFilePath);
         System.out.println("Print intermediate models: "+printallmodels);
+        System.out.println("Input file path: "+path);
 
         
         replayer=new LCReplayer(outputFilePath);
