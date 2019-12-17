@@ -49,18 +49,7 @@ public class Precedence implements LCTemplateReplayer {
 	private LossyCounting<HashMap<String, HashMap<String, Integer>>> fulfilledConstraintsPerTrace = new LossyCounting<HashMap<String, HashMap<String, Integer>>>();	
 	
 	//File file = new File(System.getProperty("user.home")+"/OutDeclare/OutPrecedence.txt");
-	File file = new File(outpath+".txt");
 
-	FileWriter fw = null;
-	BufferedWriter brf;
-	static PrintWriter printout;{			
-	try {
-		fw = new FileWriter(file);
-	} catch (IOException e2) {
-		e2.printStackTrace();
-	}
-	brf = new BufferedWriter(fw);
-	printout = new PrintWriter(brf);}
 	
 	@Override
 	public void addObservation(String caseId, Integer currentBucket) {
@@ -285,17 +274,17 @@ public class Precedence implements LCTemplateReplayer {
 	public void resultsTemp(int np){
 		
 		
-		File file = new File(outpath+Integer.toString(np)+".txt");
-		FileWriter fw = null;
-		BufferedWriter brf;
-		PrintWriter printout;			
+		File file1 = new File(outpath+Integer.toString(np)+".txt");
+		FileWriter fw1 = null;
+		BufferedWriter brf1;
+		PrintWriter printout1;			
 		try {
-			fw = new FileWriter(file);
+			fw1 = new FileWriter(file1);
 		} catch (IOException e2) {
 			e2.printStackTrace();
 		}
-		brf = new BufferedWriter(fw);
-		printout = new PrintWriter(brf);
+		brf1 = new BufferedWriter(fw1);
+		printout1 = new PrintWriter(brf1);
 		
 				//System.out.println("\nok");
 								
@@ -303,24 +292,37 @@ public class Precedence implements LCTemplateReplayer {
 			//System.out.println("\nok 2");
 			for(String bEvent : mod.mm.get(aEvent).keySet()){
 				
-				printout.println("@@@@@@@@@@@@@@@@@@@@@@@@\n"+aEvent+"%"+bEvent+"\n@@@@@@@@@@@@");
+				printout1.println("@@@@@@@@@@@@@@@@@@@@@@@@\n"+aEvent+"%"+bEvent+"\n@@@@@@@@@@@@");
 //				System.out.println(mc.get(aEvent).get(bEvent).getElement0());
 //				System.out.println(mc.get(aEvent).get(bEvent).getElement1());
 				//System.out.println(mod.mm.get(aEvent).get(bEvent).getElement1());
 				//System.out.println(n);
-				printout.println(mod.mm.get(aEvent).get(bEvent).getElement1());
-				printout.println("\nCorrect Fulfillment = "+mod.value.get(aEvent+"-"+bEvent)[0]+
+				printout1.println(mod.mm.get(aEvent).get(bEvent).getElement1());
+				printout1.println("\nCorrect Fulfillment = "+mod.value.get(aEvent+"-"+bEvent)[0]+
 						"\nUncorrect Fulfillment = "+mod.value.get(aEvent+"-"+bEvent)[1]+
 						"\nCorrect Violation = "+mod.value.get(aEvent+"-"+bEvent)[2]+
 						"\nUncorrect Violation = "+mod.value.get(aEvent+"-"+bEvent)[3]+"\n");
 			}
 		}	
 		//System.out.println("Prec");
-		printout.flush();
-		printout.close();
+		printout1.flush();
+		printout1.close();
 	}
 	@Override
 	public void results(){
+		File file = new File(outpath+".txt");
+
+		FileWriter fw = null;
+		BufferedWriter brf;
+		PrintWriter printout;{			
+		try {
+			fw = new FileWriter(file);
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
+		brf = new BufferedWriter(fw);
+		printout = new PrintWriter(brf);}
+		
 				System.out.println("\nok");
 								
 		for(String aEvent : mod.mm.keySet()){ 

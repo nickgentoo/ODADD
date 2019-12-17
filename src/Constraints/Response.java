@@ -49,18 +49,7 @@ public class Response implements LCTemplateReplayer {
 	private LossyCounting<HashMap<String, HashMap<String, Integer>>> fulfilledConstraintsPerTrace = new LossyCounting<HashMap<String, HashMap<String, Integer>>>();
 	
 	//File file = new File(System.getProperty("user.home")+"/OutDeclare/OutResponse.txt");
-	File file = new File(outpath+".txt");
 
-	FileWriter fw = null;
-	BufferedWriter brf;
-	static PrintWriter printout;{			
-	try {
-		fw = new FileWriter(file);
-	} catch (IOException e2) {
-		e2.printStackTrace();
-	}
-	brf = new BufferedWriter(fw);
-	printout = new PrintWriter(brf);}
 	public  Response(String path) {
 		super();
 		// TODO Auto-generated constructor stub
@@ -385,8 +374,22 @@ public class Response implements LCTemplateReplayer {
 		printout.flush();
 		printout.close();
 		}
+	
 	@Override
 	public void results(){
+		File file = new File(outpath+".txt");
+
+		FileWriter fw = null;
+		BufferedWriter brf;
+		PrintWriter printout;{			
+		try {
+			fw = new FileWriter(file);
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
+		brf = new BufferedWriter(fw);
+		printout = new PrintWriter(brf);}
+		
 		for(String aEvent : mod.mm.keySet()){ 
 			for(String bEvent : mod.mm.get(aEvent).keySet()){
 				System.out.println(mod.mm.get(aEvent).get(bEvent).getElement1());

@@ -116,7 +116,7 @@ public class Entry {
         path=inputFilePath;
         
         String printallmodelsstring=cmd.getOptionValue("printintermediate");
-        if (printallmodelsstring=="true") {
+        if (printallmodelsstring.contentEquals("true")) {
         	printallmodels=true;
         }
         
@@ -179,6 +179,8 @@ public class Entry {
 		
 		System.out.println("Fine");
 		log.println("Fine");
+		log.flush();
+		log.close();
 	}
 	
 	public static void Run() throws IOException {
