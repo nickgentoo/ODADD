@@ -76,6 +76,7 @@ public class Precedence implements LCTemplateReplayer {
 	@Override
 	public void cleanup(Integer currentBucket) {
 		fulfilledConstraintsPerTrace.cleanup(currentBucket);
+		//Nick
 		activityLabelsCounterPrecedence.cleanup(currentBucket);
 	}
 	
@@ -102,13 +103,13 @@ public class Precedence implements LCTemplateReplayer {
 			if(!attr.getKey().contains("concept") && !attr.getKey().contains("stream:lifecycle") && !attr.getKey().contains("time:timestamp")){
 				
 				if(!attribute.containsKey(attr.getKey())){        
-					//				if(isNumeric(attr.toString()) && !attr.getKey().equals("Activity code") && !attr.getKey().equals("Specialism code")){
-					//					
-					//					//double d = Double.parseDouble(attr.toString());
-					//					attribute.put(attr.getKey(), attr.toString()); 
-					//				}else{
+									//if(isNumeric(attr.toString()) && !attr.getKey().equals("Activity code") && !attr.getKey().equals("Specialism code")){
+										
+									//	double d = Double.parseDouble(attr.toString());
+								//		attribute.put(attr.getKey(), d); 
+								//	}else{
 					attribute.put(attr.getKey(), attr.toString());
-					//				}								
+								//	}								
 				}else if(attribute.containsKey(attr.getKey())){               //!attr.getKey().contains(":") && 
 					attribute.remove(attr.getKey());
 					attribute.put(attr.getKey(), attr.toString());
@@ -122,13 +123,14 @@ public class Precedence implements LCTemplateReplayer {
 			if(!attr.getKey().contains("concept") && !attr.getKey().contains("stream:lifecycle") && !attr.getKey().contains("time:timestamp")){
 				//System.out.println(attr.getKey());		
 				if(!attribute.containsKey(attr.getKey())){        
-					//				if(isNumeric(attr.toString()) && !attr.getKey().equals("Activity code") && !attr.getKey().equals("Specialism code")){
-					//					double d = Double.parseDouble(attr.toString());
-					//					attribute.put(attr.getKey(), d); 
-					//				}else{
+									//if(isNumeric(attr.toString()) && !attr.getKey().equals("Activity code") && !attr.getKey().equals("Specialism code")){
+					//	double d = Double.parseDouble(attr.toString());
+					//		attribute.put(attr.getKey(), d); 
+					//		}else{
 					attribute.put(attr.getKey(), attr.toString());
-					//				}								
+					//			}								
 				}else if(attribute.containsKey(attr.getKey())){               //!attr.getKey().contains(":") && 
+
 					attribute.remove(attr.getKey());
 					attribute.put(attr.getKey(), attr.toString());
 				}		
@@ -194,7 +196,7 @@ public class Precedence implements LCTemplateReplayer {
 						fulfilledForThisTrace.put(existingEvent, secondElement);
 
 						fulf = true;
-						//nr++;
+						nr++;
 
 						//if(nr>1){
 				      			start1 = System.currentTimeMillis();
@@ -212,7 +214,7 @@ public class Precedence implements LCTemplateReplayer {
 			if(mod.mm.containsKey(event)){
 				ArrayList<String> actEve = new ArrayList<String>(mod.mm.get(event).keySet());
 				for(String secEl : actEve){
-					//if(!counter.containsKey(secEl)){
+					//if(counter.containsKey(secEl)){
 						fulf = false;
 						nr++;
 

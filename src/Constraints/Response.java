@@ -123,12 +123,12 @@ public class Response implements LCTemplateReplayer {
 			if(!attr.getKey().contains("concept") && !attr.getKey().contains("stream:lifecycle") && !attr.getKey().contains("time:timestamp")){
 				//System.out.println(attr.getKey());		
 				if(!attribute.containsKey(attr.getKey())){        
-					//				if(isNumeric(attr.toString()) && !attr.getKey().equals("Activity code") && !attr.getKey().equals("Specialism code")){
-					//					double d = Double.parseDouble(attr.toString());
-					//					attribute.put(attr.getKey(), d); 
-					//				}else{
+									if(isNumeric(attr.toString()) && !attr.getKey().equals("Activity code") && !attr.getKey().equals("Specialism code")){
+										double d = Double.parseDouble(attr.toString());
+										attribute.put(attr.getKey(), d); 
+									}else{
 					attribute.put(attr.getKey(), attr.toString());
-					//				}								
+									}								
 				}else if(attribute.containsKey(attr.getKey())){               //!attr.getKey().contains(":") && 
 					attribute.remove(attr.getKey());
 					attribute.put(attr.getKey(), attr.toString());
@@ -147,16 +147,17 @@ public class Response implements LCTemplateReplayer {
 		String caseId = Utils.getCaseID(tr);
 		String event = Utils.getActivityName(eve);
 		
-		if(snapCollection.containsKey(event)){
+		if(snapCollection.containsKey(caseId+event)){
 			
-			if(snapCollection.get(event).size()>3)
-				snapCollection.get(event).removeFirst();
+			//if(snapCollection.get(caseId+event).size()>3) //Nick 3
+			//	snapCollection.get(caseId+event).removeFirst();
 			
-			snapCollection.get(event).addLast(attribute);
+			snapCollection.get(caseId+event).addLast(attribute);
 		}else{
 			LinkedList<HashMap<String, Object>> firstSnap = new LinkedList<HashMap<String, Object>>();
 			firstSnap.add(attribute);
-			snapCollection.put(event, firstSnap);
+			//System.out.println(caseId+event+" SNAP: "+firstSnap);
+			snapCollection.put(caseId+event, firstSnap);
 		}
 		
 		activityLabelsResponse.add(event);
@@ -198,9 +199,11 @@ public class Response implements LCTemplateReplayer {
 //						}
 
 						//for(int i = 0; i<snapCollection.get(existingEvent).size(); i++){	
-						if(snapCollection.get(existingEvent).size()>0){
-							attribute = snapCollection.get(existingEvent).getLast();//.get(snapCollection.get(existingEvent).size()-1);
-
+						//Nick aggiunta prima condizione
+						if(snapCollection.containsKey(caseId+existingEvent) && snapCollection.get(caseId+existingEvent).size()>0){
+							attribute = snapCollection.get(caseId+existingEvent).getLast();//.get(snapCollection.get(existingEvent).size()-1);
+							System.out.println("Found attribute "+attribute);
+							System.out.flush();
 							fulf = true;
 							nr++;
 
@@ -251,8 +254,8 @@ public class Response implements LCTemplateReplayer {
 //						numPend = snapCollection.get(firstElement).size();
 //					}
 					//for(int i = 0 ; i<snapCollection.get(firstElement).size(); i++){
-					if(snapCollection.get(firstElement).size()>0){
-						attribute = snapCollection.get(firstElement).getLast();//.get(snapCollection.get(firstElement).lastIndexOf(firstElement));					
+					if(snapCollection.get(caseId+firstElement).size()>0){
+						attribute = snapCollection.get(caseId+firstElement).getLast();//.get(snapCollection.get(firstElement).lastIndexOf(firstElement));					
 						fulf = true;
 						nr++;
 
@@ -306,6 +309,8 @@ public class Response implements LCTemplateReplayer {
 		// ***********************
 		
 		if(Utils.isTraceComplete(eve)){
+			//System.out.println("Response trace complete");
+			//System.out.flush();
 			for (String firstElement : pendingForThisTrace.keySet()) {
 				for (String secondElement : pendingForThisTrace.get(firstElement).keySet()) {
 					//System.out.println("Response violation 1");
@@ -314,9 +319,22 @@ public class Response implements LCTemplateReplayer {
 						////for(int i = 0; i<snapCollection.get(firstElement).size(); i++){
 						//System.out.println("Response violation 2");
 						//int pp = mod.mm.get(firstElement).size();
-						boolean bb = mod.mm.get(firstElement).isEmpty();
-						if(snapCollection.get(firstElement).size()>=1 && mod.mm.get(firstElement).containsKey(secondElement)){
-							attribute = snapCollection.get(firstElement).getLast();//.get(snapCollection.get(firstElement).size()-1);
+						//System.out.println("Response violation enter");
+						//System.out.flush();
+						
+						boolean bbb=  mod.mm.containsKey(firstElement);
+						//System.out.println("Response after check bbb");
+						//System.out.flush();
+						boolean bb=false;
+						if (bbb){
+						bb = mod.mm.get(firstElement).isEmpty();}
+						//System.out.println("Response after check bb");
+						//System.out.flush();
+						if(bbb && !bb &&snapCollection.get(caseId+firstElement).size()>=1 && mod.mm.get(firstElement).containsKey(secondElement)){
+							//System.out.println("Response violation 2 ");
+							//System.out.flush();
+
+							attribute = snapCollection.get(caseId+firstElement).getLast();//.get(snapCollection.get(firstElement).size()-1);
 							fulf = false;
 							nr++;
 //							System.out.println("Response violation 3");
@@ -329,17 +347,19 @@ public class Response implements LCTemplateReplayer {
 								en++;				
 								nr=1;				
 							//}
-							snapCollection.get(firstElement).removeLast();//.remove(snapCollection.get(firstElement).size()-1);							
+							//snapCollection.get(caseId+firstElement).removeLast();//.remove(snapCollection.get(firstElement).size()-1);							
 						}
 					}						
 				}
 			}
 		}		
 		
-		if(activityLabelsResponse.size()>10)
+		//Nick
+		if(activityLabelsResponse.size()>20)
 			activityLabelsResponse.removeFirst();
 		
 		mod.clean();
+		//---------
 		//System.out.println(en);
 		//System.out.println("Re:\ttprocess:\t"+(System.currentTimeMillis()-start)+"\ttaddObs:\t"+time);		
 	}	

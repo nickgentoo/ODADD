@@ -146,15 +146,21 @@ public class LossyModel {
 		//in.setRelationName(A+"-"+B);
 		//InstancesHeader ih = new InstancesHeader(in);
 		ih.setClassIndex(0);
-		in.setClassIndex(0);
+		//Nick in.setClassIndex(0);
 		
 		//System.out.println(in.classAttribute());
 
 		hf.prepareForUse();
 		hf.setModelContext(ih);
 		hf.leafpredictionOption.setChosenLabel("MC");
+		//hf.gracePeriodOption.setValue(2);
+		//hf.splitConfidenceOption.setValue(1.0E-4);
+		//Nick
 		hf.gracePeriodOption.setValue(2);
 		hf.splitConfidenceOption.setValue(1.0E-4);
+		//hf.removePoorAttsOption.setValue(true); //GIVES ERROR
+		//hf.binarySplitsOption.setValue(true);
+		//---
 		//hf.maxByteSizeOption.setValue(10);// di default 32 MByte espressi in bit
 		//hf.stopMemManagementOption.setValue(true);
 		int[] val= new int[4];

@@ -212,7 +212,7 @@ public class Entry {
 			
 			//System.out.println(ne);
 			
-			if(ne%100==0){
+			if(ne%1000==0){
 				//System.out.println(ne);
 				System.out.print("\n"+ne+"\t--Time:\t"+(System.currentTimeMillis()-start));
 				//log.println(ne);
